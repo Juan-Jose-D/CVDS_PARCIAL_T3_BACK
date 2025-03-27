@@ -24,9 +24,9 @@ public class PaymentController {
     
 
     @PostMapping
-    public ResponseEntity<?> paymentReservation(@RequestBody Payment payment, HashMap<String, Integer> products) {
+    public ResponseEntity<?> paymentReservation(HashMap<String, Integer> products) {
         try {
-            return new ResponseEntity<>(paymentService.createPayment(payment, products), HttpStatus.CREATED);
+            return new ResponseEntity<>(paymentService.createPayment(products), HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }

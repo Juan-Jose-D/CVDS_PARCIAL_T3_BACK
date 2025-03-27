@@ -20,14 +20,14 @@ public class PaymentService {
         this.productRepository = productRepository;
     }
 
-    public Payment createPayment(Payment payment, HashMap<String, Integer> products) {
+    public Payment createPayment(HashMap<String, Integer> products) {
+        Payment payment = new Payment(products, new Date(), 0);
         int totalPrice = 0;
         for (String key : products.keySet()) {
             Product product = productRepository.findById(key).orElseThrow(() -> new RuntimeException("Product not found"));
             totalPrice += product.getPrice();
         }
         payment.setId(new ObjectId().toString());
-        payment.setDate(new Date());
         payment.setTotalPrice(totalPrice);
         return paymentRepository.save(payment);
     }
